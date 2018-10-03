@@ -19,7 +19,7 @@ const styles = theme => ({
   gridList: {
     maxWidth: 800,
     height: 'auto',
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
     padding: theme.spacing.unit,
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
@@ -36,6 +36,7 @@ function InfiniteScrollList(props) {
           pageStart={1}
           loadMore={loadMore}
           hasMore={hasMore}
+          loader={<CircularLoading key="012 - Circular II" color="secondary"/>}
         >
           <GridList className={classes.gridList}>
             {movies.map(movie => (
