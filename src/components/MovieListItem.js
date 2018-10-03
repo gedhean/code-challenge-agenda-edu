@@ -95,7 +95,7 @@ function MovieListItem(props) {
         </Grid>
       </Grid>
       {favorite ? (
-        <Grid item style={{position: "absolute", top: 5, right: 5}}>
+        <Grid item style={{position: "absolute", top: 4, right: 0}}>
           <IconButton
             onClick={() => {
               // Salvano firebase
