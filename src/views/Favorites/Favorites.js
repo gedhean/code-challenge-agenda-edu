@@ -5,7 +5,7 @@ import MovieList from '../../components/MovieList'
 
 const styles = {
   root: {
-    maxWidth: '560px',
+    maxWidth: '800px',
     margin: '0px auto',
   }
 }
