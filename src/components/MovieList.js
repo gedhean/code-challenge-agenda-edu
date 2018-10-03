@@ -17,8 +17,9 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   gridList: {
-    maxWidth: 500,
+    maxWidth: 800,
     height: 'auto',
+    justifyContent: "space-around",
     padding: theme.spacing.unit,
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)'
