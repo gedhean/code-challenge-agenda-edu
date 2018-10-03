@@ -23,7 +23,8 @@ import { addFavorite, removeFavorite } from '../store/reducers/favorites'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    maxWidth: 600,
+    maxWidth: 345,
+    position: 'relative',
     padding: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit / 2
   },
@@ -45,10 +46,10 @@ function MovieListItem(props) {
   const { classes, movie, extraInfo, favorite, authenticated, userId, dispatch } = props
   const movie_name = movie.title || movie.original_title || movie.originnal_name || movie.name
   const isFavorite = props.favoritesIds.includes(movie.id)
-  
+
   return (
     <Paper className={classes.root} elevation={2}>
-      <Grid container spacing={16}>
+      <Grid container spacing={16} justify="center">
         <Grid item>
           <ButtonBase to={`/details/${movie.id}`} className={classes.image} component={Link}>
             <PreloadImage
@@ -60,13 +61,17 @@ function MovieListItem(props) {
             />
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
+        <Grid item xs={12} sm container justify="space-between">
           <Grid item xs container direction="column" spacing={16}>
             <Grid item xs>
-              <Typography gutterBottom variant="headline" component="h2">
+              <Typography
+                gutterBottom
+                variant="headline"
+                component="h2"
+                style={{ fontSize: '1.25rem', wordBreak: 'break-word' }}
+              >
                 {movie_name}
               </Typography>
-              <MoviePopularity popularity={movie.popularity} votes={movie.vote_average} />
               {extraInfo ? (
                 <Fragment>
                   <Typography
@@ -77,87 +82,90 @@ function MovieListItem(props) {
                   >
                     {movie.overview}
                   </Typography>
-                  <Typography color="textSecondary">
+                  {/* <Typography color="textSecondary">
                     Release: {movie.release_date || 'Unknown'}
-                  </Typography>
+                  </Typography> */}
                 </Fragment>
               ) : null}
             </Grid>
-          </Grid>
-          {favorite ? (
             <Grid item>
-              <IconButton
-                onClick={() => {
-                  // Salvano firebase
-                  if (authenticated) {
-                    const ref = `favorites/${userId}/${movie.id}`
-                    if (isFavorite) {
-                      firebase
-                        .database()
-                        .ref(ref)
-                        .remove()
-                        .then(res => {
-                          console.log(res)
-                          dispatch(removeFavorite(movie.id))
-                          dispatch(
-                            newFeedback({
-                              variant: 'success',
-                              message: `${movie_name} removed to Favorites`
-                            })
-                          )
-                        })
-                        .catch(err => {
-                          console.log(err)
-                          dispatch(
-                            newFeedback({
-                              variant: 'error',
-                              message: `Faild to remove ${movie_name} to Favorites`
-                            })
-                          )
-                        })
-                    } else {
-                      firebase
-                        .database()
-                        .ref(ref)
-                        .set(movie, err => {
-                          if (err) {
-                            dispatch(
-                              newFeedback({
-                                variant: 'error',
-                                message: `Could not add ${movie_name} to Favorites`
-                              })
-                            )
-                            console.log(`Could not add ${movie_name} to favorites: ${err}`)
-                          } else {
-                            dispatch(addFavorite(movie))
-                            dispatch(
-                              newFeedback({
-                                variant: 'success',
-                                message: `${movie_name} added to Favorites`
-                              })
-                            )
-                            console.log(`${movie_name} added to favorites`)
-                          }
-                        })
-                    }
-                  } else {
-                    dispatch(
-                      newFeedback({
-                        variant: `warning`,
-                        message: `Please Login in order to add ${movie_name} to favorites.`
-                      })
-                    )
-                  }
-                }}
-              >
-                <Tooltip title="Favorite" placement="top-start">
-                  {isFavorite ? <FavotiteCheckedIcon /> : <FavoriteIcon />}
-                </Tooltip>
-              </IconButton>
+              <MoviePopularity popularity={movie.popularity} votes={movie.vote_average} />
             </Grid>
-          ) : null}
+          </Grid>
         </Grid>
       </Grid>
+      {favorite ? (
+        <Grid item style={{position: "absolute", top: 5, right: 5}}>
+          <IconButton
+            onClick={() => {
+              // Salvano firebase
+              if (authenticated) {
+                const ref = `favorites/${userId}/${movie.id}`
+                if (isFavorite) {
+                  firebase
+                    .database()
+                    .ref(ref)
+                    .remove()
+                    .then(res => {
+                      console.log(res)
+                      dispatch(removeFavorite(movie.id))
+                      dispatch(
+                        newFeedback({
+                          variant: 'success',
+                          message: `${movie_name} removed to Favorites`
+                        })
+                      )
+                    })
+                    .catch(err => {
+                      console.log(err)
+                      dispatch(
+                        newFeedback({
+                          variant: 'error',
+                          message: `Faild to remove ${movie_name} to Favorites`
+                        })
+                      )
+                    })
+                } else {
+                  firebase
+                    .database()
+                    .ref(ref)
+                    .set(movie, err => {
+                      if (err) {
+                        dispatch(
+                          newFeedback({
+                            variant: 'error',
+                            message: `Could not add ${movie_name} to Favorites`
+                          })
+                        )
+                        console.log(`Could not add ${movie_name} to favorites: ${err}`)
+                      } else {
+                        dispatch(addFavorite(movie))
+                        dispatch(
+                          newFeedback({
+                            variant: 'success',
+                            message: `${movie_name} added to Favorites`
+                          })
+                        )
+                        console.log(`${movie_name} added to favorites`)
+                      }
+                    })
+                }
+              } else {
+                dispatch(
+                  newFeedback({
+                    variant: `warning`,
+                    message: `Please Login in order to add ${movie_name} to favorites.`
+                  })
+                )
+              }
+            }}
+          >
+            <Tooltip title="Favorite" placement="top-start">
+              {isFavorite ? <FavotiteCheckedIcon style={{ color: '#FFDF00' }} /> : <FavoriteIcon />}
+            </Tooltip>
+          </IconButton>
+        </Grid>
+      ) : null}
     </Paper>
   )
 }
