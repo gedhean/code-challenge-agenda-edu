@@ -10,7 +10,7 @@ const styles = {
   },
   container: {
     margin: '0px auto',
-    maxWidth: '565px'
+    maxWidth: '800px'
   }
 }
 
