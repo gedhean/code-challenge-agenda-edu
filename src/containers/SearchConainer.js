@@ -59,13 +59,15 @@ class SearchConainer extends Component {
         <CircularLoading color="secondary" />
       </div>
     ) : (
-      <MovieList
-        movies={this.state.results}
-        loadMore={this.loadSearch}
-        hasMore={this.state.hasMore}
-        extraInfo
-        favorite
-      />
+      <div style={{ maxWidth: 800, margin: '0px auto' }}>
+        <MovieList
+          movies={this.state.results}
+          loadMore={this.loadSearch}
+          hasMore={this.state.hasMore}
+          extraInfo
+          favorite
+        />
+      </div>
     )
   }
 }
