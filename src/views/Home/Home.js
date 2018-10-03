@@ -18,7 +18,7 @@ class Home extends Component {
   state = {
     movies: [],
     page: 1,
-    hasMore: true
+    hasMore: false
   }
 
   componentDidMount() {
@@ -27,15 +27,19 @@ class Home extends Component {
 
   loadMoveis = page => {
     console.log('page:', page)
-    getTopMovies(page).then(data => {
-      console.log(data)
-      this.setState(prevState => ({
-        movies: [...prevState.movies, ...data.results],
-        page: data.page,
-        totalPages: data.total_pages,
-        hasMore: page < data.total_pages
-      }))
-    })
+    getTopMovies(page)
+      .then(data => {
+        console.log(data)
+        this.setState(prevState => ({
+          movies: [...prevState.movies, ...data.results],
+          page: data.page,
+          totalPages: data.total_pages,
+          hasMore: page < data.total_pages
+        }))
+      })
+      .catch(err => {
+        this.setState({ error: err.message, hasMore: false })
+      })
   }
 
   render() {
