@@ -28,6 +28,9 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "jest": "^23.6.0",
     "react-app-rewire-workbox": "^2.0.1",
     "workbox-webpack-plugin": "^3.6.2"
   }
