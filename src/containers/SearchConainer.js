@@ -16,7 +16,9 @@ class SearchConainer extends Component {
 
   componentDidUpdate(prevProps) {
     // Check for a new search
-    if (this.props.match.params !== prevProps.match.params) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      console.log('Prev Props:', prevProps)
+      console.log('New Props:', this.props)
       // reset the preview results and load new ones
       this.setState({ results: [] }, () => this.loadSearch(1))
     }
