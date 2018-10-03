@@ -121,7 +121,7 @@ class Feedback extends React.Component {
         <Snackbar
           anchorOrigin={{
             vertical: 'top',
-            horizontal: 'left'
+            horizontal: 'right'
           }}
           open={this.state.open}
           autoHideDuration={3000}
