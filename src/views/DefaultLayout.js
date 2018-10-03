@@ -28,7 +28,7 @@ class DefaultLayout extends Component {
 
   componentDidMount() {
     // Load favorites one time if user is logged
-    firebase.auth().onAuthStateChanged(user => {
+    this.unsubscribeAuthObserver = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         firebase
           .database()
@@ -48,6 +48,10 @@ class DefaultLayout extends Component {
         this.setState({ loading: false })
       }
     })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeAuthObserver()
   }
 
   render() {

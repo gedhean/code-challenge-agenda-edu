@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const styles = {
   width: '100%',
@@ -7,18 +7,18 @@ const styles = {
   textAlign: 'center',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-};
+  justifyContent: 'center'
+}
 
-const SvgNoContent = props => (
+const SvgNoContent = ({ mobile, ...props }) => (
   <div style={styles}>
     <svg
       xmlnsosb="http://www.openswatchbook.org/uri/2009/osb"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       width={640}
       height={640}
-      {...props}
-    >
+      style={{ zoom: mobile ? '60%' : '100%' }}
+      {...props}>
       <defs>
         <linearGradient id="a" osbpaint="solid">
           <stop offset={0} stopColor="#2d4a5e" />
@@ -123,6 +123,6 @@ const SvgNoContent = props => (
       />
     </svg>
   </div>
-);
+)
 
-export default SvgNoContent;
+export default SvgNoContent
