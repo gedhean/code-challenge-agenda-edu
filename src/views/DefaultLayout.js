@@ -11,6 +11,7 @@ import firebase from '../firebase/init'
 import AppBar from '../components/AppBar'
 import Feedback from '../components/Feedback'
 import { setFavorites } from '../store/reducers/favorites'
+import { newFeedback } from '../store/reducers/feedback'
 
 const styles = {
   root: {
@@ -48,6 +49,24 @@ class DefaultLayout extends Component {
         this.setState({ loading: false })
       }
     })
+    // Give feedback to the user about network connection
+    window.addEventListener(
+      'offline',
+      this.notifyUser({ variant: 'warning', message: 'You are offline' })
+    )
+    window.addEventListener(
+      'online',
+      this.notifyUser({ variant: 'success', message: 'You are online' })
+    )
+  }
+
+  notifyUser = notification => () => {
+    this.props.dispatch(newFeedback(notification))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('offline', this.notifyUser)
+    window.removeEventListener('online', this.notifyUser)
   }
 
   render() {
