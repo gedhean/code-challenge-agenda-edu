@@ -7,7 +7,7 @@ import ResourceNotFound from '../components/ResourceNotFound.js'
 class SearchConainer extends Component {
   state = {
     results: [],
-    hasMore: true,
+    hasMore: false,
     noResults: false
   }
   componentDidMount() {
@@ -40,8 +40,12 @@ class SearchConainer extends Component {
         console.log(data)
       })
       .catch(err => {
-        this.setState({ error: 'Resource could not be found. Sorry.', noResults: true })
-        console.log('Search erro:', err)
+        this.setState({
+          error: err.message,
+          noResults: this.state.results.length === 0,
+          hasMore: false
+        })
+        console.log('Search erro:', err.message)
       })
   }
 
